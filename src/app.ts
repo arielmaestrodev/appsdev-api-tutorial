@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import hpp from "hpp";
 import { ENV } from "@/config/env";
+import routes from "@/routes";
 
 const app = express();
 
@@ -37,6 +38,9 @@ app.get("/api/health", (_req: Request, res: Response) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// --- API Routes ---
+app.use("/api", routes);
 
 // --- 404 Handler ---
 app.use((req: Request, res: Response) => {

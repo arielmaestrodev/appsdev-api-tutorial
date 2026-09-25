@@ -30,13 +30,13 @@ Open this folder in your editor, then open its integrated terminal.
 Install the packages used by the API:
 
 ```bash
-npm install cookie-parser cors dotenv express helmet hpp jsonwebtoken nodemailer zod csrf-csrf
+npm install cookie-parser cors dotenv express helmet hpp jsonwebtoken nodemailer zod csrf-csrf bcrypt
 ```
 
 Install the TypeScript, build, linting, and type-definition packages:
 
 ```bash
-npm install -D @eslint/js @types/cookie-parser @types/cors @types/express @types/hpp @types/jsonwebtoken @types/node @types/nodemailer @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint tsdown tsx typescript typescript-eslint
+npm install -D @eslint/js @types/cookie-parser @types/cors @types/express @types/hpp @types/jsonwebtoken @types/node @types/nodemailer @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint tsdown tsx typescript typescript-eslint @types/bcrypt
 ```
 
 ## 3. Configure TypeScript and ESLint

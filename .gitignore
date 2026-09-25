@@ -19,8 +19,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Generated Prisma type declarations
-src/prisma/contract.d.ts
+# Prisma plan scratch files. Commit contract.json, contract.d.ts, and migrations/snapshots/<hash>/.
+migrations/snapshots/.tmp-*/
 
 # Editor and operating-system files
 .vscode/

@@ -10,8 +10,9 @@
     "build": "tsdown src/server.ts --format esm --clean --minify",
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.mjs",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
+    "db:emit": "prisma contract emit",
+    "db:plan": "prisma migration plan",
+    "db:migrate": "prisma db migrate --advance-ref db",
     "lint": "eslint .",
     "contract:emit": "prisma contract emit"
   },
@@ -21,6 +22,7 @@
   "type": "commonjs",
   "dependencies": {
     "@prisma/orm-postgres": "^8.0.0-rc.11",
+    "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "csrf-csrf": "^4.0.3",
@@ -35,6 +37,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@prisma/cli-engine": "^0.4.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",

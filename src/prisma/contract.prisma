@@ -1,21 +1,40 @@
 // use prisma-8
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String?
-  name      String?
-  posts     Post[]
-  createdAt TimestamptzString @default(now())
-  updatedAt temporal.updatedAtString()
+enum Role {
+  USER
+  ADMIN
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-  createdAt TimestamptzString @default(now())
-  updatedAt temporal.updatedAtString()
+enum TokenType {
+  REFRESH
+  EMAIL_VERIFY
+}
+
+// Models
+model User {
+  id               String    @id @default(uuid())
+  email            String?   @unique
+  password         String?
+  name             String?
+  emailVerified    TimestamptzString? @map("email_verified") // @map is custom table name
+  createdAt        TimestamptzString @default(now()) @map("created_at")
+  updatedAt        temporal.updatedAtString() @map("updated_at")
+
+  role             Role      @default(USER) // default value from enum Role "USER"
+  tokens           Token[]
+}
+
+model Token {
+  id         String     @id @default(uuid())
+  type       TokenType
+  token      String     @unique
+  expiresAt  TimestamptzString
+  createdAt  TimestamptzString @default(now()) @map("created_at")
+  consumedAt TimestamptzString? @map("consumed_at")
+  revokedAt  TimestamptzString? @map("revoked_at")
+
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
 }
