@@ -1,8 +1,14 @@
 import { Request, Response } from "express";
-import { signupService, loginService, refreshTokenService, logoutService } from "@/services/auth";
+import { signupService, loginService, refreshTokenService, logoutService, getUserSessionService, getCsrfTokenService } from "@/services/auth";
 import { setAuthCookies, clearAuthCookies } from "@/lib/auth-cookies";
 
 export class AuthController {
+  // Get CSRF Token Function Controller
+  public getCsrfToken = (req: Request, res: Response) => {
+    const result = getCsrfTokenService(req, res);
+    return res.status(result.code).json(result);
+  };
+
   // Signup Function Controller
   public signup = async (req: Request, res: Response) => {
     const { name, email, password } = req.body ?? {};
@@ -45,4 +51,11 @@ export class AuthController {
     }
     return res.status(result.code).json(result);
   }
+
+  // Get Current User Session
+  public userSession = async (req: Request, res: Response) => {
+    const userId = (req as any).user?.sub;
+    const result = await getUserSessionService(userId);
+    return res.status(result.code).json(result);
+  };
 }

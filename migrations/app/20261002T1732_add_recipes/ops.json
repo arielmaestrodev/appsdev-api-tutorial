@@ -1,0 +1,206 @@
+[
+  {
+    "id": "dropCheckConstraint.token.token_type_check_48e96910",
+    "label": "Drop check constraint \"token_type_check_48e96910\" on \"token\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "checkConstraint",
+        "name": "token_type_check_48e96910",
+        "table": "token"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"token_type_check_48e96910\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "token_type_check_48e96910",
+          "public",
+          "\"public\".\"token\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop check constraint \"token_type_check_48e96910\"",
+        "sql": "ALTER TABLE \"public\".\"token\" DROP CONSTRAINT \"token_type_check_48e96910\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"token_type_check_48e96910\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "token_type_check_48e96910",
+          "public",
+          "\"public\".\"token\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.recipe",
+    "label": "Create table \"recipe\"",
+    "summary": "Creates table \"recipe\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "recipe"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"recipe\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"recipe\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"recipe\"",
+        "sql": "CREATE TABLE \"public\".\"recipe\" (\n  \"cookTimeMinutes\" int4 NOT NULL,\n  \"cuisine\" text NOT NULL,\n  \"difficulty\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"image\" text NOT NULL,\n  \"ingredients\" text[] NOT NULL,\n  \"instructions\" text[] NOT NULL,\n  \"mealType\" text[] NOT NULL,\n  \"name\" text NOT NULL,\n  \"tags\" text[] NOT NULL,\n  \"userId\" text NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"recipe_ingredients_elem_not_null_225187b9\" CHECK (array_position(\"ingredients\", NULL) IS NULL),\n  CONSTRAINT \"recipe_instructions_elem_not_null_fd3a69a7\" CHECK (array_position(\"instructions\", NULL) IS NULL),\n  CONSTRAINT \"recipe_mealType_elem_not_null_312ed8e5\" CHECK (array_position(\"mealType\", NULL) IS NULL),\n  CONSTRAINT \"recipe_tags_elem_not_null_aecbe9e2\" CHECK (array_position(\"tags\", NULL) IS NULL)\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"recipe\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"recipe\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "checkConstraint.token.token_type_check_e8655caf",
+    "label": "Add check constraint \"token_type_check_e8655caf\" on \"token\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "checkConstraint",
+        "name": "token_type_check_e8655caf",
+        "table": "token"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"token_type_check_e8655caf\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "token_type_check_e8655caf",
+          "public",
+          "\"public\".\"token\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add check constraint \"token_type_check_e8655caf\"",
+        "sql": "ALTER TABLE \"public\".\"token\" ADD CONSTRAINT \"token_type_check_e8655caf\" CHECK (\"type\" IN ('REFRESH', 'EMAIL_VERIFY'))"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"token_type_check_e8655caf\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "token_type_check_e8655caf",
+          "public",
+          "\"public\".\"token\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.recipe.recipe_userId_idx_a489d58a",
+    "label": "Create index \"recipe_userId_idx_a489d58a\" on \"recipe\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "recipe_userId_idx_a489d58a",
+        "table": "recipe"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"recipe_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"recipe_userId_idx_a489d58a\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"recipe_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"recipe_userId_idx_a489d58a\" ON \"public\".\"recipe\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"recipe_userId_idx_a489d58a\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"recipe_userId_idx_a489d58a\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.recipe.recipe_userId_fkey",
+    "label": "Add foreign key \"recipe_userId_fkey\" on \"recipe\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "recipe_userId_fkey",
+        "table": "recipe"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"recipe_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "recipe_userId_fkey",
+          "public",
+          "\"public\".\"recipe\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"recipe_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"recipe\"\nADD CONSTRAINT \"recipe_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"user\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"recipe_userId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "recipe_userId_fkey",
+          "public",
+          "\"public\".\"recipe\""
+        ]
+      }
+    ]
+  }
+]

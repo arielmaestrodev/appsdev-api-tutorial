@@ -13,8 +13,7 @@
     "db:emit": "prisma contract emit",
     "db:plan": "prisma migration plan",
     "db:migrate": "prisma db migrate --advance-ref db",
-    "lint": "eslint .",
-    "contract:emit": "prisma contract emit"
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",

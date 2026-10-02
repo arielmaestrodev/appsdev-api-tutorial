@@ -22,6 +22,25 @@ model User {
 
   role             Role      @default(USER) // default value from enum Role "USER"
   tokens           Token[]
+  recipes          Recipe[]
+}
+
+model Recipe {
+  id              String   @id @default(uuid())
+  name            String
+  cuisine         String
+  mealType        String[]
+  difficulty      String
+  cookTimeMinutes Int
+  tags            String[]
+  image           String
+  ingredients     String[]
+  instructions    String[]
+
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Token {

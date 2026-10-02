@@ -7,6 +7,7 @@ export default defineConfig(
   globalIgnores([
     "dist/**",
     "node_modules/**",
+    "migrations/**",
     "src/generated/**",
     "src/prisma/contract.d.ts",
     "eslint.config.js",

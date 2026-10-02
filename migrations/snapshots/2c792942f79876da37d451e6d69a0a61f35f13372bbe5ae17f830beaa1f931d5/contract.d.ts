@@ -34,9 +34,9 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'c898f5ee1bc6dd1ff277aaf842e72043e2ebc14cc6cbf843cd0b71197a59db56'>;
+  StorageHashBase<'2c792942f79876da37d451e6d69a0a61f35f13372bbe5ae17f830beaa1f931d5'>;
 export type ExecutionHash =
-  ExecutionHashBase<'5bc90b04311bcfe3a2cbea803f564d4d063765e6c1644909afb82031856394f4'>;
+  ExecutionHashBase<'937fe5ed2e5d9f073905df93e8a041a689afb04312faeeedec3d940c320802a3'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -243,7 +243,7 @@ type DefaultLiteralValue<CodecId extends string, Encoded> = CodecId extends keyo
 export type FieldOutputTypes = {
   readonly public: {
     readonly Recipe: {
-      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly id: CodecTypes['pg/int4@1']['output'];
       readonly name: CodecTypes['pg/text@1']['output'];
       readonly cuisine: CodecTypes['pg/text@1']['output'];
       readonly mealType: ReadonlyArray<CodecTypes['pg/text@1']['output']>;
@@ -280,7 +280,7 @@ export type FieldOutputTypes = {
 export type FieldInputTypes = {
   readonly public: {
     readonly Recipe: {
-      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly id: CodecTypes['pg/int4@1']['input'];
       readonly name: CodecTypes['pg/text@1']['input'];
       readonly cuisine: CodecTypes['pg/text@1']['input'];
       readonly mealType: ReadonlyArray<CodecTypes['pg/text@1']['input']>;
@@ -320,7 +320,7 @@ export type StorageColumnTypes = {
       readonly cookTimeMinutes: CodecTypes['pg/int4@1']['output'];
       readonly cuisine: CodecTypes['pg/text@1']['output'];
       readonly difficulty: CodecTypes['pg/text@1']['output'];
-      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly id: CodecTypes['pg/int4@1']['output'];
       readonly image: CodecTypes['pg/text@1']['output'];
       readonly ingredients: ReadonlyArray<CodecTypes['pg/text@1']['output']>;
       readonly instructions: ReadonlyArray<CodecTypes['pg/text@1']['output']>;
@@ -357,7 +357,7 @@ export type StorageColumnInputTypes = {
       readonly cookTimeMinutes: CodecTypes['pg/int4@1']['input'];
       readonly cuisine: CodecTypes['pg/text@1']['input'];
       readonly difficulty: CodecTypes['pg/text@1']['input'];
-      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly id: CodecTypes['pg/int4@1']['input'];
       readonly image: CodecTypes['pg/text@1']['input'];
       readonly ingredients: ReadonlyArray<CodecTypes['pg/text@1']['input']>;
       readonly instructions: ReadonlyArray<CodecTypes['pg/text@1']['input']>;
@@ -404,7 +404,7 @@ export namespace Models {
     readonly [RelationKeys]?: 'recipes' | 'tokens';
   };
   export type public_Recipe = {
-    id: CodecTypes['pg/text@1']['output'];
+    id: CodecTypes['pg/int4@1']['output'];
     name: CodecTypes['pg/text@1']['output'];
     cuisine: CodecTypes['pg/text@1']['output'];
     mealType: ReadonlyArray<CodecTypes['pg/text@1']['output']>;
@@ -461,9 +461,13 @@ type ContractBase = Omit<
             readonly recipe: {
               columns: {
                 readonly id: {
-                  readonly nativeType: 'text';
-                  readonly codecId: 'pg/text@1';
+                  readonly nativeType: 'int4';
+                  readonly codecId: 'pg/int4@1';
                   readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
                 };
                 readonly name: {
                   readonly nativeType: 'text';
@@ -702,7 +706,7 @@ type ContractBase = Omit<
             readonly fields: {
               readonly id: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
               };
               readonly name: {
                 readonly nullable: false;
@@ -977,14 +981,6 @@ type ContractBase = Omit<
     readonly executionHash: ExecutionHash;
     readonly mutations: {
       readonly defaults: readonly [
-        {
-          readonly ref: {
-            readonly namespace: 'public';
-            readonly table: 'recipe';
-            readonly column: 'id';
-          };
-          readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
-        },
         {
           readonly ref: {
             readonly namespace: 'public';

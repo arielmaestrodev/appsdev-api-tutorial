@@ -52,15 +52,15 @@ means `src/app.ts`.
 Add these scripts to the `scripts` section of [package.json](../package.json):
 
 ```json
-{
-  "dev": "tsx watch src/server.ts",
+"scripts": {
   "build": "tsdown src/server.ts --format esm --clean --minify",
+  "dev": "tsx watch src/server.ts",
   "start": "node dist/server.mjs",
-  "lint": "eslint .",
-  "db:generate": "prisma generate",
-  "db:migrate": "prisma migrate dev",
-  "contract:emit": "prisma contract emit"
-}
+  "db:emit": "prisma contract emit",
+  "db:plan": "prisma migration plan",
+  "db:migrate": "prisma db migrate --advance-ref db",
+  "lint": "eslint ."
+},
 ```
 
 Use `npm run dev` while developing. It restarts the server when you save a TypeScript file. Use `npm run build` followed by `npm start` to test the production build.
