@@ -34,9 +34,15 @@ export class AuthMiddleware {
 
   // Helper method to extract bearer token from Authorization header
   private extractBearerToken(header?: string) {
-    if (!header) return undefined;
+    if (!header) {
+      return undefined;
+    }
+
     const [scheme, token] = header.split(" ");
-    if (!scheme || scheme.toLowerCase() !== "bearer" || !token) return undefined;
+    if (!scheme || scheme.toLowerCase() !== "bearer" || !token) {
+      return undefined;
+    }
+
     return token.trim();
   }
 }

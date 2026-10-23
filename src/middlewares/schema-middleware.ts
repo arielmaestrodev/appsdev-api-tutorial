@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { ZodType, ZodError } from "zod";
 
 export class SchemaMiddleware {
-  public validate = (schema: ZodType) =>
-    async (req: Request, res: Response, next: NextFunction) => {
+  public validate = (schema: ZodType) => {
+    return async (req: Request, res: Response, next: NextFunction) => {
       try {
         await schema.parseAsync({
           body: req.body,
@@ -25,4 +25,5 @@ export class SchemaMiddleware {
         return next(error);
       }
     };
+  };
 }

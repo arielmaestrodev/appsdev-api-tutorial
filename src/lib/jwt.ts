@@ -39,13 +39,18 @@ export function verifyRefreshToken(token: string): JwtPayload | null {
 }
 
 export function toMilliseconds(duration?: string | number) {
-  if (duration === undefined) return undefined;
+  if (duration === undefined) {
+    return undefined;
+  }
+
   if (typeof duration === "number") {
     return duration * 1000;
   }
 
   const match = /^(\d+)([smhd])$/.exec(duration);
-  if (!match) return undefined;
+  if (!match) {
+    return undefined;
+  }
 
   const value = Number(match[1]);
   const unit = match[2];

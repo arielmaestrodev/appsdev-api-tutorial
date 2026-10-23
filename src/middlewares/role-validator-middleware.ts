@@ -4,8 +4,8 @@ import type { AuthenticatedRequest } from "@/middlewares/auth-middleware";
 type Role = "USER" | "ADMIN";
 
 export class RoleValidatorMiddleware {
-  public validate = (...allowedRoles: Role[]) =>
-    (req: Request, res: Response, next: NextFunction) => {
+  public validate = (...allowedRoles: Role[]) => {
+    return (req: Request, res: Response, next: NextFunction) => {
       const { user } = req as AuthenticatedRequest;
 
       if (!user || user.type !== "access") {
@@ -26,4 +26,5 @@ export class RoleValidatorMiddleware {
 
       return next();
     };
+  };
 }

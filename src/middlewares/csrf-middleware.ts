@@ -6,7 +6,9 @@ import { validateRequest, csrfSessionCookieName, csrfTokenCookieName } from "@/l
 export class CsrfMiddleware {
   // Run after AuthMiddleware: only successfully verified Bearer authentication can skip CSRF.
   public execute = (req: Request, res: Response, next: NextFunction) => {
-    if ((req as AuthenticatedRequest).authMethod === "bearer") return next();
+    if ((req as AuthenticatedRequest).authMethod === "bearer") {
+      return next();
+    }
     return this.validate(req, res, next);
   };
 
@@ -15,7 +17,9 @@ export class CsrfMiddleware {
     const browserRequest = req.get("origin") || req.get("referer") || req.get("sec-fetch-site")
       || req.cookies?.accessToken || req.cookies?.refreshToken
       || req.cookies?.[csrfSessionCookieName] || req.cookies?.[csrfTokenCookieName];
-    if (!browserRequest && req.is("application/json")) return next();
+    if (!browserRequest && req.is("application/json")) {
+      return next();
+    }
     return this.validate(req, res, next);
   };
 
@@ -23,13 +27,19 @@ export class CsrfMiddleware {
   public refreshToken = (req: Request, res: Response, next: NextFunction) => {
     const token = req.body?.refreshToken;
     if (!req.cookies?.accessToken && !req.cookies?.refreshToken
-      && typeof token === "string" && verifyRefreshToken(token)) return next();
+      && typeof token === "string" && verifyRefreshToken(token)) {
+      return next();
+    }
     return this.validate(req, res, next);
   };
 
   private validate(req: Request, res: Response, next: NextFunction) {
-    if (["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
-    if (validateRequest(req)) return next();
+    if (["GET", "HEAD", "OPTIONS"].includes(req.method)) {
+      return next();
+    }
+    if (validateRequest(req)) {
+      return next();
+    }
     return res.status(403).json({ code: 403, status: "error", message: "Invalid or missing CSRF token" });
   }
 }
