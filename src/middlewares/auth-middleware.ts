@@ -11,7 +11,7 @@ export class AuthMiddleware {
     let accessToken = this.extractBearerToken(req.headers.authorization);
     const authMethod = accessToken ? "bearer" : "cookie";
 
-    // 2. Fallback t  o Cookies (for Web applications)
+    // 2. Fallback to Cookies (for Web applications)
     if (!accessToken && req.cookies) {
       accessToken = req.cookies.accessToken;
     }

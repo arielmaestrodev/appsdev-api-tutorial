@@ -2,7 +2,12 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import { randomUUID } from "node:crypto";
 import { ENV } from "@/config/env";
 
-export type JwtPayload = { sub: string; role: string; type: "access" | "refresh" };
+export type JwtPayload = { 
+  sub: string;
+  role: string;
+  type: "access" | "refresh" 
+};
+
 const jwtSecret = ENV.JWT_SECRET;
 
 export enum TokenExpiry {

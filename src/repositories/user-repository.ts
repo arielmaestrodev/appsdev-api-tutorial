@@ -15,12 +15,7 @@ const publicFields = {
 
 export class UserRepository {
   async findById(id: string) {
-    const [user] = await db
-      .select(publicFields)
-      .from(users)
-      .where(eq(users.id, id))
-      .limit(1);
-
+    const [user] = await db.select(publicFields).from(users).where(eq(users.id, id)).limit(1);
     return user;
   }
 
