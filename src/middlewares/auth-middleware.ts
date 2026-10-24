@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyAccessToken, JwtPayload } from "@/lib/jwt";
 
-export type AuthenticatedRequest = Request & { user?: JwtPayload; authMethod?: "bearer" | "cookie" };
+export type AuthenticatedRequest = Request & { 
+  user?: JwtPayload;
+  authMethod?: "bearer" | "cookie"
+};
 
 export class AuthMiddleware {
   public execute = async (req: Request, res: Response, next: NextFunction) => {

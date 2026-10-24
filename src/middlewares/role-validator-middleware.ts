@@ -15,7 +15,7 @@ export class RoleValidatorMiddleware {
           message: "Authentication required",
         });
       }
-
+  
       if (!allowedRoles.some((role) => role === user.role)) {
         return res.status(403).json({
           code: 403,
