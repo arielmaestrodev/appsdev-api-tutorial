@@ -14,8 +14,8 @@ export class SchemaMiddleware {
       } catch (error) {
         if (error instanceof ZodError) {
           return res.status(400).json({
-            status: "error",
-            message: "Validation failed",
+              status: "error",
+              message: "Validation failed",
             errors: error.issues.map((issue) => ({
               path: issue.path.join("."),
               message: issue.message,

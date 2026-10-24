@@ -8,6 +8,7 @@ export function getCsrfTokenService(req: Request, res: Response) {
     req.cookies[csrfSessionCookieName] = sessionId;
     res.cookie(csrfSessionCookieName, sessionId, csrfCookieOptions);
   }
+  
   const csrfToken = generateCsrfToken(req, res);
   res.setHeader("Cache-Control", "no-store");
   return { code: 200, status: "success", data: { csrfToken } };

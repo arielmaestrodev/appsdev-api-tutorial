@@ -23,8 +23,7 @@ if (isProduction && !ENV.CSRF_SECRET) {
 export const { generateCsrfToken, validateRequest } = doubleCsrf({
   getSecret: () => csrfSecret,
   // Refresh-token rotation invalidates the old CSRF token. Before login, use an anonymous ID.
-  getSessionIdentifier: (req) => req.cookies?.refreshToken || req.cookies?.accessToken
-    || req.cookies?.[csrfSessionCookieName] || "",
+  getSessionIdentifier: (req) => req.cookies?.refreshToken || req.cookies?.accessToken || req.cookies?.[csrfSessionCookieName] || "",
   cookieName: csrfTokenCookieName,
   cookieOptions: csrfCookieOptions,
   getCsrfTokenFromRequest: (req) => req.get("x-csrf-token"),

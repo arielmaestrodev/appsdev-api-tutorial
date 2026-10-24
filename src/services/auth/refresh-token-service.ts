@@ -27,7 +27,9 @@ export async function refreshTokenService(refreshToken?: string) {
 
     // 4. Token Rotation: Consume the old token and generate a new pair
     const consumed = await tokenRepository.consumeToken(dbToken.id);
-    if (!consumed) return { code: 401, status: "error", message: "Refresh token has already been used" };
+    if (!consumed) {
+      return { code: 401, status: "error", message: "Refresh token has already been used" };
+    }
 
     const accessToken = signAccessToken(user.id, user.role, TokenExpiry.ACCESS_TOKEN_EXPIRES);
     const newRefreshToken = signRefreshToken(user.id, user.role, TokenExpiry.REFRESH_TOKEN_EXPIRES);
